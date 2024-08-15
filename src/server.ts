@@ -13,12 +13,12 @@ app.use(
     helmet({
         contentSecurityPolicy: {
             directives: {
-                defaultSrc: ["'self'", "http://localhost:3000"], // Allow your frontend
+                defaultSrc: ["'self'", "http://localhost:3000", "https://alien-bathroom-review.vercel.app/"], // Separate URLs
                 scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
                 styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
                 imgSrc: ["'self'", "data:"],
                 fontSrc: ["'self'", "https://fonts.gstatic.com"],
-                connectSrc: ["'self'", "http://localhost:3000"], // Allow frontend for API calls
+                connectSrc: ["'self'", "http://localhost:3000", "https://alien-bathroom-review.vercel.app/"], // Separate URLs for API calls
             },
         },
         crossOriginEmbedderPolicy: false,
@@ -27,7 +27,7 @@ app.use(
 
 // Enable CORS to allow requests from your frontend
 app.use(cors({
-    origin: 'http://localhost:3000', // Change this to your deployed frontend URL in production
+    origin: ['http://localhost:3000', 'https://www.example.com'], // Allow both local and production frontend URLs
     credentials: true, // Allow credentials like cookies to be sent if needed
 }));
 
