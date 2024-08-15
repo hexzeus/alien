@@ -13,12 +13,12 @@ app.use(
     helmet({
         contentSecurityPolicy: {
             directives: {
-                defaultSrc: ["'self'", "http://localhost:3000", "https://alien-bathroom-review.vercel.app/", "https://alien-2q9q.onrender.com"], // Separate URLs
+                defaultSrc: ["'self'", "http://localhost:3000", "https://alien-bathroom-review.vercel.app", "https://alien-2q9q.onrender.com"], // Separate URLs
                 scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
                 styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
                 imgSrc: ["'self'", "data:"],
                 fontSrc: ["'self'", "https://fonts.gstatic.com"],
-                connectSrc: ["'self'", "http://localhost:3000", "https://alien-bathroom-review.vercel.app/", "https://alien-2q9q.onrender.com"], // Separate URLs for API calls
+                connectSrc: ["'self'", "http://localhost:3000", "https://alien-bathroom-review.vercel.app", "https://alien-2q9q.onrender.com"], // Separate URLs for API calls
             },
         },
         crossOriginEmbedderPolicy: false,
