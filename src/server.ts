@@ -13,12 +13,12 @@ app.use(
     helmet({
         contentSecurityPolicy: {
             directives: {
-                defaultSrc: ["'self'", "http://localhost:3000", "https://alien-bathroom-review.vercel.app", "https://alien-2q9q.onrender.com"], // Separate URLs
+                defaultSrc: ["'self'", "http://localhost:3000", "https://alien-bathroom-review.vercel.app", "https://alien-2q9q.onrender.com", "https://alien-2q9q.onrender.com/api/reviews"], // Separate URLs
                 scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
                 styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
                 imgSrc: ["'self'", "data:"],
                 fontSrc: ["'self'", "https://fonts.gstatic.com"],
-                connectSrc: ["'self'", "http://localhost:3000", "https://alien-bathroom-review.vercel.app", "https://alien-2q9q.onrender.com"], // Separate URLs for API calls
+                connectSrc: ["'self'", "http://localhost:3000", "https://alien-bathroom-review.vercel.app", "https://alien-2q9q.onrender.com", "https://alien-2q9q.onrender.com/api/reviews"], // Separate URLs for API calls
             },
         },
         crossOriginEmbedderPolicy: false,
@@ -27,7 +27,7 @@ app.use(
 
 // Enable CORS to allow requests from your frontend
 app.use(cors({
-    origin: ['http://localhost:3000', 'https://alien-bathroom-review.vercel.app/', 'https://alien-2q9q.onrender.com'], // Allow both local and production frontend URLs
+    origin: ['http://localhost:3000', 'https://alien-bathroom-review.vercel.app/', 'https://alien-2q9q.onrender.com', "https://alien-2q9q.onrender.com/api/reviews"], // Allow both local and production frontend URLs
     credentials: true, // Allow credentials like cookies to be sent if needed
 }));
 
