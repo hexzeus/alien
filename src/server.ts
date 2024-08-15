@@ -27,7 +27,7 @@ app.use(
 
 // Enable CORS to allow requests from your frontend
 app.use(cors({
-    origin: ['http://localhost:3000', 'https://www.example.com'], // Allow both local and production frontend URLs
+    origin: ['http://localhost:3000', 'https://alien-bathroom-review.vercel.app/'], // Allow both local and production frontend URLs
     credentials: true, // Allow credentials like cookies to be sent if needed
 }));
 
