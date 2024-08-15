@@ -1,14 +1,17 @@
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
 
+// Load environment variables from .env file
 dotenv.config();
 
+// Ensure that the connection string is loaded
+console.log('DATABASE_URL:', process.env.DATABASE_URL ? 'Connection string is set' : 'Connection string is missing');
+
 const pool = new Pool({
-    user: process.env.DB_USER || 'postgres',
-    host: process.env.DB_HOST || 'localhost',
-    database: process.env.DB_NAME || 'alien_reviews',
-    password: process.env.DB_PASSWORD || 'your_password',
-    port: Number(process.env.DB_PORT) || 5432,
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false,  // Disable SSL certificate verification (this might be necessary for Render)
+    },
 });
 
 export default pool;
