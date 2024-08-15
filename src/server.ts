@@ -13,12 +13,12 @@ app.use(
     helmet({
         contentSecurityPolicy: {
             directives: {
-                defaultSrc: ["'self'", "http://localhost:3000", "https://alien-bathroom-review.vercel.app"], // Allow your frontend
+                defaultSrc: ["'self'", "http://localhost:3000", "https://alienbathreview.vercel.app"], // Allow your frontend
                 scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
                 styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
                 imgSrc: ["'self'", "data:"],
                 fontSrc: ["'self'", "https://fonts.gstatic.com"],
-                connectSrc: ["'self'", "http://localhost:3000", "https://alien-bathroom-review.vercel.app"], // Allow frontend for API calls
+                connectSrc: ["'self'", "http://localhost:3000", "https://alienbathreview.vercel.app"], // Allow frontend for API calls
             },
         },
         crossOriginEmbedderPolicy: false,
@@ -28,7 +28,7 @@ app.use(
 // Enable CORS to allow requests from your frontend
 app.use(
     cors({
-        origin: ['http://localhost:3000', 'https://alien-bathroom-review.vercel.app'], // Allow both local and production frontends
+        origin: ['http://localhost:3000', 'https://alienbathreview.vercel.app'], // Allow both local and production frontends
         credentials: true, // Allow credentials like cookies to be sent if needed
     })
 );
