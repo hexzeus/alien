@@ -13,12 +13,12 @@ app.use(
     helmet({
         contentSecurityPolicy: {
             directives: {
-                defaultSrc: ["'self'", "https://alien-bathroom-review.vercel.app"], // Allow your frontend
+                defaultSrc: ["'self'", "http://localhost:3000", "https://alien-bathroom-review.vercel.app"], // Allow your frontend
                 scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
                 styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
                 imgSrc: ["'self'", "data:"],
                 fontSrc: ["'self'", "https://fonts.gstatic.com"],
-                connectSrc: ["'self'", "https://alien-bathroom-review.vercel.app/"], // Allow frontend for API calls
+                connectSrc: ["'self'", "http://localhost:3000", "https://alien-bathroom-review.vercel.app"], // Allow frontend for API calls
             },
         },
         crossOriginEmbedderPolicy: false,
@@ -26,15 +26,15 @@ app.use(
 );
 
 // Enable CORS to allow requests from your frontend
-app.use(cors({
-    origin: 'https://alien-bathroom-review.vercel.app/', // Change this to your deployed frontend URL in production
-    credentials: true, // Allow credentials like cookies to be sent if needed
-}));
+app.use(
+    cors({
+        origin: ['http://localhost:3000', 'https://alien-bathroom-review.vercel.app'], // Allow both local and production frontends
+        credentials: true, // Allow credentials like cookies to be sent if needed
+    })
+);
 
 // Parse JSON bodies
 app.use(express.json());
-
-// Parse URL-encoded bodies
 app.use(express.urlencoded({ extended: true }));
 
 // Serve static files from a 'public' directory
