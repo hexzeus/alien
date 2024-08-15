@@ -1,0 +1,21 @@
+# Ignore node_modules folder
+node_modules/
+
+# Ignore environment variables
+.env
+
+# Ignore dist folder (for built/compiled files)
+dist/
+
+# Ignore log files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignore system files
+.DS_Store
+
+# Ignore package-lock and yarn lock (optional if you don't want to commit lock files)
+package-lock.json
+yarn.lock
