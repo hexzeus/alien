@@ -13,7 +13,11 @@ export const createReview = async (req: Request, res: Response) => {
     const result = await pool.query(query, values);
     res.status(201).json(result.rows[0]);
   } catch (error) {
-    console.error(error);
+    if (error instanceof Error) {
+      console.error(error.message);
+    } else {
+      console.error('An unexpected error occurred:', error);
+    }
     res.status(500).json({ message: 'Error creating review' });
   }
 };
@@ -24,7 +28,11 @@ export const getReviews = async (req: Request, res: Response) => {
     const result = await pool.query('SELECT * FROM reviews');
     res.status(200).json(result.rows);
   } catch (error) {
-    console.error(error);
+    if (error instanceof Error) {
+      console.error(error.message);
+    } else {
+      console.error('An unexpected error occurred:', error);
+    }
     res.status(500).json({ message: 'Error fetching reviews' });
   }
 };
@@ -39,7 +47,11 @@ export const getReviewById = async (req: Request, res: Response) => {
     }
     res.status(200).json(result.rows[0]);
   } catch (error) {
-    console.error(error);
+    if (error instanceof Error) {
+      console.error(error.message);
+    } else {
+      console.error('An unexpected error occurred:', error);
+    }
     res.status(500).json({ message: 'Error fetching review' });
   }
 };
@@ -61,7 +73,11 @@ export const updateReview = async (req: Request, res: Response) => {
     }
     res.status(200).json(result.rows[0]);
   } catch (error) {
-    console.error(error);
+    if (error instanceof Error) {
+      console.error(error.message);
+    } else {
+      console.error('An unexpected error occurred:', error);
+    }
     res.status(500).json({ message: 'Error updating review' });
   }
 };
@@ -76,22 +92,24 @@ export const deleteReview = async (req: Request, res: Response) => {
     }
     res.status(200).json({ message: 'Review deleted successfully' });
   } catch (error) {
-    console.error(error);
+    if (error instanceof Error) {
+      console.error(error.message);
+    } else {
+      console.error('An unexpected error occurred:', error);
+    }
     res.status(500).json({ message: 'Error deleting review' });
   }
 };
 
+// Get review stats for the admin dashboard
 export const getReviewStats = async (req: Request, res: Response) => {
   try {
-    // Total number of reviews
     const totalReviewsResult = await pool.query('SELECT COUNT(*) FROM reviews');
     const totalReviews = parseInt(totalReviewsResult.rows[0].count);
 
-    // Average overall rating
     const averageRatingResult = await pool.query('SELECT AVG(rating_overall) FROM reviews');
     const averageRating = parseFloat(averageRatingResult.rows[0].avg).toFixed(2);
 
-    // Number of flagged reviews (assuming we add a 'flagged' column to the reviews table)
     const flaggedReviewsResult = await pool.query('SELECT COUNT(*) FROM reviews WHERE flagged = TRUE');
     const flaggedReviews = parseInt(flaggedReviewsResult.rows[0].count);
 
@@ -101,21 +119,32 @@ export const getReviewStats = async (req: Request, res: Response) => {
       flaggedReviews,
     });
   } catch (error) {
-    console.error(error);
+    if (error instanceof Error) {
+      console.error('Error fetching review stats:', error.message);
+      console.error(error.stack);
+    } else {
+      console.error('An unexpected error occurred:', error);
+    }
     res.status(500).json({ message: 'Error fetching review stats' });
   }
 };
 
+// Get all reviews for admin
 export const getAllReviewsForAdmin = async (req: Request, res: Response) => {
   try {
     const result = await pool.query('SELECT * FROM reviews ORDER BY created_at DESC');
     res.status(200).json(result.rows);
   } catch (error) {
-    console.error(error);
+    if (error instanceof Error) {
+      console.error(error.message);
+    } else {
+      console.error('An unexpected error occurred:', error);
+    }
     res.status(500).json({ message: 'Error fetching reviews for admin' });
   }
 };
 
+// Update the review status (approve/reject)
 export const updateReviewStatus = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -132,8 +161,11 @@ export const updateReviewStatus = async (req: Request, res: Response) => {
     }
     res.status(200).json(result.rows[0]);
   } catch (error) {
-    console.error(error);
+    if (error instanceof Error) {
+      console.error(error.message);
+    } else {
+      console.error('An unexpected error occurred:', error);
+    }
     res.status(500).json({ message: 'Error updating review status' });
   }
 };
-

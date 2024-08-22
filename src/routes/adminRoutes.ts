@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { getReviewStats } from '../controllers/reviewController';
+import { getReviewStats } from '../controllers/reviewController';  // Adjust import paths as needed
 
 const router = Router();
 
-// Define the route for fetching review stats for the admin dashboard
+// Define route to get review stats
 router.get('/stats', getReviewStats);
 
 export default router;

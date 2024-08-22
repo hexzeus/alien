@@ -3,6 +3,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import path from 'path';
 import reviewRoutes from './routes/reviewRoutes';
+import adminRoutes from './routes/adminRoutes';  // Don't forget to import your admin routes
 import { createReviewTable } from './models/reviewModel';
 
 const app = express();
@@ -13,22 +14,22 @@ app.use(
     helmet({
         contentSecurityPolicy: {
             directives: {
-                defaultSrc: ["'self'", "http://localhost:3000", "https://alienbathreview.vercel.app"], // Allow your frontend
+                defaultSrc: ["'self'", "http://localhost:3000", "http://localhost:5000", "https://alienbathreview.vercel.app"], // Allow your local and production frontends
                 scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
                 styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
                 imgSrc: ["'self'", "data:"],
                 fontSrc: ["'self'", "https://fonts.gstatic.com"],
-                connectSrc: ["'self'", "http://localhost:3000", "https://alienbathreview.vercel.app"], // Allow frontend for API calls
+                connectSrc: ["'self'", "http://localhost:3000", "http://localhost:5000", "https://alienbathreview.vercel.app"], // Allow local and production frontends for API calls
             },
         },
         crossOriginEmbedderPolicy: false,
     })
 );
 
-// Enable CORS to allow requests from your frontend
+// Enable CORS to allow requests from both local and production frontends
 app.use(
     cors({
-        origin: ['http://localhost:3000', 'https://alienbathreview.vercel.app'], // Allow both local and production frontends
+        origin: ['http://localhost:3000', 'https://alienbathreview.vercel.app', 'http://localhost:5000'], // Allow both local and production frontends
         credentials: true, // Allow credentials like cookies to be sent if needed
     })
 );
@@ -37,21 +38,25 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static files from a 'public' directory
+// Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Use review routes
+// Register review routes
 app.use('/api/reviews', reviewRoutes);
+
+// Register admin routes
+app.use('/api/admin', adminRoutes);  // Make sure your admin routes are registered here
 
 // Health check route
 app.get('/health', (req, res) => {
     res.status(200).json({ status: 'OK' });
 });
 
-// Handle favicon.ico requests
-app.get('/favicon.ico', (req, res) => res.sendStatus(204));
+app.get('/favicon.ico', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'favicon.ico'));
+});
 
-// Handle root route
+// Root route
 app.get('/', (req, res) => {
     res.send('Welcome to the Review API');
 });
@@ -59,6 +64,8 @@ app.get('/', (req, res) => {
 // Create review table
 createReviewTable().then(() => {
     console.log("Review table created successfully.");
+}).catch((error) => {
+    console.error("Error creating review table:", error);
 });
 
 // Catch-all route handler
