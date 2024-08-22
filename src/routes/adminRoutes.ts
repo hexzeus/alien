@@ -1,9 +1,11 @@
 import { Router } from 'express';
-import { getReviewStats } from '../controllers/reviewController';  // Adjust import paths as needed
+import { getAllReviewsForAdmin, getReviewStats, updateReviewStatus } from '../controllers/adminController';
 
-const router = Router();
+const adminRouter = Router();
 
-// Define route to get review stats
-router.get('/stats', getReviewStats);
+// Admin routes
+adminRouter.get('/reviews', getAllReviewsForAdmin);
+adminRouter.get('/stats', getReviewStats);
+adminRouter.put('/review/:id/status', updateReviewStatus); // Route to approve/reject reviews
 
-export default router;
+export default adminRouter;

@@ -3,7 +3,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import path from 'path';
 import reviewRoutes from './routes/reviewRoutes';
-import adminRoutes from './routes/adminRoutes';  // Don't forget to import your admin routes
+import adminRoutes from './routes/adminRoutes'; // Don't forget to import your admin routes
 import { createReviewTable } from './models/reviewModel';
 
 const app = express();
@@ -45,7 +45,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/reviews', reviewRoutes);
 
 // Register admin routes
-app.use('/api/admin', adminRoutes);  // Make sure your admin routes are registered here
+app.use('/api/admin', adminRoutes); // Make sure your admin routes are registered here
 
 // Health check route
 app.get('/health', (req, res) => {
@@ -62,11 +62,13 @@ app.get('/', (req, res) => {
 });
 
 // Create review table
-createReviewTable().then(() => {
-    console.log("Review table created successfully.");
-}).catch((error) => {
-    console.error("Error creating review table:", error);
-});
+createReviewTable()
+    .then(() => {
+        console.log("Review table created successfully.");
+    })
+    .catch((error) => {
+        console.error("Error creating review table:", error);
+    });
 
 // Catch-all route handler
 app.use((req, res) => {

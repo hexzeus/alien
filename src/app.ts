@@ -1,6 +1,6 @@
 import express from 'express';
 import reviewRoutes from './routes/reviewRoutes';
-import adminRoutes from './routes/adminRoutes';  // Import admin routes
+import adminRoutes from './routes/adminRoutes'; // Import admin routes
 import { createReviewTable } from './models/reviewModel';
 
 const app = express();
@@ -15,10 +15,12 @@ app.use('/api/reviews', reviewRoutes);
 app.use('/api/admin', adminRoutes);
 
 // Create the reviews table if it doesn't exist
-createReviewTable().then(() => {
-    console.log("Review table created successfully.");
-}).catch((error) => {
-    console.error("Error creating review table:", error);
-});
+createReviewTable()
+    .then(() => {
+        console.log("Review table created successfully.");
+    })
+    .catch((error) => {
+        console.error("Error creating review table:", error);
+    });
 
 export default app;
