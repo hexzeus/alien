@@ -6,14 +6,15 @@ export const createReview = async (req: Request, res: Response) => {
   try {
     const { place_name, comment, rating_overall, rating_cleanliness, rating_comfort } = req.body;
     const query = `
-      INSERT INTO reviews (place_name, comment, rating_overall, rating_cleanliness, rating_comfort)
-      VALUES ($1, $2, $3, $4, $5) RETURNING *;
+      INSERT INTO reviews (place_name, comment, rating_overall, rating_cleanliness, rating_comfort, flagged)
+      VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;
     `;
-    const values = [place_name, comment, rating_overall, rating_cleanliness, rating_comfort];
+    const values = [place_name, comment, rating_overall, rating_cleanliness, rating_comfort, false]; // Default flagged to false
     const result = await pool.query(query, values);
     res.status(201).json(result.rows[0]);
   } catch (error) {
-    handleServerError(error, res, 'Error creating review');
+    console.error(error);
+    res.status(500).json({ message: 'Error creating review' });
   }
 };
 

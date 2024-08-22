@@ -4,15 +4,17 @@ import pool from '../config/database';
 // Get review stats for the admin dashboard
 export const getReviewStats = async (req: Request, res: Response) => {
     try {
+        // Log the current database to ensure you're connected to the correct one
+        const currentDatabase = await pool.query('SELECT current_database();');
+        console.log('Connected to database:', currentDatabase.rows[0].current_database);
+
         const totalReviewsResult = await pool.query('SELECT COUNT(*) FROM reviews');
         const totalReviews = parseInt(totalReviewsResult.rows[0].count);
 
         const averageRatingResult = await pool.query('SELECT AVG(rating_overall) FROM reviews');
         const averageRating = parseFloat(averageRatingResult.rows[0].avg).toFixed(2);
 
-        // Log flagged query to debug
         const flaggedReviewsResult = await pool.query('SELECT COUNT(*) FROM reviews WHERE flagged = TRUE');
-        console.log('Flagged reviews result:', flaggedReviewsResult);  // Log this for debugging
         const flaggedReviews = parseInt(flaggedReviewsResult.rows[0].count);
 
         res.status(200).json({
