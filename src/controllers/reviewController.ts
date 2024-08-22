@@ -80,3 +80,28 @@ export const deleteReview = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Error deleting review' });
   }
 };
+
+export const getReviewStats = async (req: Request, res: Response) => {
+  try {
+    // Total number of reviews
+    const totalReviewsResult = await pool.query('SELECT COUNT(*) FROM reviews');
+    const totalReviews = parseInt(totalReviewsResult.rows[0].count);
+
+    // Average overall rating
+    const averageRatingResult = await pool.query('SELECT AVG(rating_overall) FROM reviews');
+    const averageRating = parseFloat(averageRatingResult.rows[0].avg).toFixed(2);
+
+    // Number of flagged reviews (assuming we add a 'flagged' column to the reviews table)
+    const flaggedReviewsResult = await pool.query('SELECT COUNT(*) FROM reviews WHERE flagged = TRUE');
+    const flaggedReviews = parseInt(flaggedReviewsResult.rows[0].count);
+
+    res.status(200).json({
+      totalReviews,
+      averageRating,
+      flaggedReviews,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error fetching review stats' });
+  }
+};
